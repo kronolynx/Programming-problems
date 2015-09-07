@@ -1,3 +1,41 @@
+// merge sorte
+void merge(int *arr, int *temp, int lo, int mid, int hi){
+    
+    for(int i = lo; i <= hi; i++){
+        temp[i] = arr[i];
+    }
+    
+    int j = lo , k = mid + 1;
+    
+    for(int i = lo; i <= hi; i++){
+        if(j > mid) arr[i] = temp[k++];
+        else if(k > hi) arr[i] = temp[j++];
+        else if (temp[j] < temp[k]) arr[i] = temp[j++];
+        else arr[i] = temp[k++];
+    }
+}
+
+void sort_m(int *arr, int *temp, int lo, int hi){
+    
+    if (hi <= lo) return;
+    
+    int mid = lo + (hi - lo)/ 2;
+    
+    sort_m(arr, temp, lo, mid);
+    sort_m(arr, temp, mid + 1, hi);
+    merge(arr, temp, lo, mid, hi);
+}
+
+// starting point of merge sort
+void merge_sort(int *arr,int size){
+    int *temp = new int[size];
+    sort_m(arr,temp, 0, size - 1);
+    delete(temp);
+}
+
+
+
+
 //Insertion sort
 void insertion_sort(int *arr, int size){
        
