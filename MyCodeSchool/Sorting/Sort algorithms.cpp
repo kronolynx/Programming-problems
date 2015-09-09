@@ -1,5 +1,33 @@
-// merge sorte
-void merge(int *arr, int *temp, int lo, int mid, int hi){
+// Quick sort
+int partition(int *arr, int start, int end){
+    int index = start;
+    swap(arr[end], arr[(rand() % (end - start)) + start]); //randomize pivot
+    int pivot  = arr[end]; 
+    
+    for(int i = start; i < end; i++){
+        if(arr[i] <= pivot){
+            swap(arr[i], arr[index]);
+            index++;
+        }
+    }
+    swap(arr[index], arr[end]);
+    return index;
+}
+
+void quick_sort(int *arr, int start, int end){
+    if(start < end){
+        int partition_index = partition(arr, start, end);
+        quick_sort(arr, start, partition_index - 1);
+        quick_sort(arr, partition_index + 1, end);
+    }
+}
+
+void quick_sort(int *arr, int size){
+       quick_sort(arr, 0, size - 1); // important size - 1
+}
+
+// Merge sort
+void merge_sort(int *arr, int *temp, int lo, int mid, int hi){
     
     for(int i = lo; i <= hi; i++){
         temp[i] = arr[i];
@@ -15,21 +43,21 @@ void merge(int *arr, int *temp, int lo, int mid, int hi){
     }
 }
 
-void sort_m(int *arr, int *temp, int lo, int hi){
+void merge_sort(int *arr, int *temp, int lo, int hi){
     
     if (hi <= lo) return;
     
     int mid = lo + (hi - lo)/ 2;
     
-    sort_m(arr, temp, lo, mid);
-    sort_m(arr, temp, mid + 1, hi);
-    merge(arr, temp, lo, mid, hi);
+    merge_sort(arr, temp, lo, mid);
+    merge_sort(arr, temp, mid + 1, hi);
+    merge_sort(arr, temp, lo, mid, hi);
 }
 
 // starting point of merge sort
 void merge_sort(int *arr,int size){
     int *temp = new int[size];
-    sort_m(arr,temp, 0, size - 1);
+    merge_sort(arr,temp, 0, size - 1);
     delete(temp);
 }
 
@@ -48,7 +76,7 @@ void insertion_sort(int *arr, int size){
     }
 }
 
-// selection sort
+// Selection sort
 void selection_sort(int *arr,int size){
     int min;  
     for(int i = 0; i < size - 1; i++){
@@ -65,7 +93,7 @@ void selection_sort(int *arr,int size){
     }
 }
 
-// bubble sort
+// Bubble sort
 void bubble_sort(int *arr,int size){
     int flag;
     
